@@ -1,0 +1,11 @@
+# Fichiers temporaires Power BI
+*.pbix.auto
+*.tmp
+
+# Fichiers système et IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Données volumineuses ou confidentielles 
+data/
