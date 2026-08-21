@@ -1,0 +1,70 @@
+// =================================================================
+// TABLE : _Mesures
+// PROJET : Banking Credit Risk Analysis
+// =================================================================
+
+
+Nombre Demandes = 
+COUNTROWS(Fait_Demande_Credit)
+
+Demandes Accordees = 
+CALCULATE(
+    [Nombre Demandes],
+    Fait_Demande_Credit[Statut_Demande] = "Accordé"
+)
+
+Taux Approbation = 
+DIVIDE(
+    [Demandes Accordees],
+    [Nombre Demandes],
+    0
+)
+
+Montant Total Demande = 
+SUM(Fait_Demande_Credit[Montant_Demande_FCFA])
+
+Montant Total Accorde = 
+SUM(Fait_Demande_Credit[Montant_Accorde_FCFA])
+
+Ticket Moyen = 
+DIVIDE( [Montant Total Accorde], [Demandes Accordees] )
+
+Delai Moyen Decision (j) = 
+AVERAGEX(
+    FILTER( Fait_Demande_Credit, NOT ISBLANK( Fait_Demande_Credit[Date_Decision] ) ),
+    DATEDIFF( Fait_Demande_Credit[Date_Demande], Fait_Demande_Credit[Date_Decision], DAY )
+)
+
+
+Encours Total = 
+SUM( Fait_Performance_Pret[Capital_Restant_Du_FCFA] )
+
+Encours NPL = 
+CALCULATE(
+    [Encours Total],
+    Fait_Performance_Pret[Classe_Risque] = "NPL (>90j)"
+)
+
+Taux NPL % = 
+DIVIDE( [Encours NPL], [Encours Total] )
+
+Encours a Risque (PAR30+) = 
+CALCULATE(
+    [Encours Total],
+    Fait_Performance_Pret[Jours_Retard] > 30
+)
+
+Taux PAR30 % = 
+DIVIDE( [Encours a Risque (PAR30+)], [Encours Total] )
+
+Provisions Totales = 
+SUM( Fait_Performance_Pret[Montant_Provision_FCFA] )
+
+Taux de Provisionnement % = 
+DIVIDE( [Provisions Totales], [Encours Total] )
+
+Nb Prets en Defaut = 
+CALCULATE(
+    COUNTROWS( Fait_Performance_Pret ),
+    Fait_Performance_Pret[Statut_Pret] = "En défaut"
+)
