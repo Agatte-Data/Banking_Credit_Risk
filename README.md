@@ -7,7 +7,7 @@ Ce projet consiste à concevoir un tableau de bord analytique sous **Power BI** 
 * `data/` : Jeu de données brutes comprenant 7 tables (Dimensions & Faits).
 * `reports/` : Rapport Power BI (.pbix).
 * `dax/` : Scripts des mesures DAX créées.
-* `docs/` : Documentation technique et cahier des charges.
+* `docs/` : Documentation technique, cahier des charges et capture des en-têtes de pages.
 
 ## 📊 Modèle de Données & KPIs
 * **Modèle** : Schéma en étoile intégrant deux tables de faits (`Fait_Demande_Credit` et `Fait_Performance_Pret`).
